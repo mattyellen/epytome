@@ -1,0 +1,328 @@
+﻿<UserControl x:Class="EpytomeUI.Controls.CharacterControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:UIElements="clr-namespace:EpytomeUI.UIElements"
+             xmlns:VM="clr-namespace:EpytomeUI.ViewModels"
+             xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit" xmlns:Controls1="clr-namespace:EpytomeUI.Controls" mc:Ignorable="d"
+    d:DesignHeight="500" d:DesignWidth="250">
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.Resources>
+            <Style x:Key="LabelText"
+                   TargetType="TextBlock">
+                <Setter Property="FontWeight"
+                        Value="Bold" />
+                <Setter Property="HorizontalAlignment"
+                        Value="Right" />
+            </Style>
+            <Style x:Key="ValueText"
+                   TargetType="TextBlock">
+                <Setter Property="Grid.Column"
+                        Value="1" />
+            </Style>
+        </Grid.Resources>
+        <Grid Visibility="{Binding CharacterInWorld, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Rectangle Width="75"
+                           Height="75"
+                           Margin="0,0,5,0">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="/grass.png" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <UIElements:Character HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Margin="10,60,0,0"/>
+                <StackPanel Grid.Column="1"
+                            Orientation="Vertical">
+                    <TextBlock FontWeight="Bold"
+                               FontSize="14"
+                               Text="{Binding Name}" />
+                    <TextBlock Text="{Binding Class}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="/backpack.png" Height="40" Margin="10,0,5,0"/>
+                        <ListBox x:Name="_characterInventoryListBox"
+                                 BorderBrush="LightSlateGray"
+                                 BorderThickness="1"
+                                 Width="90"
+                                 Height="46"
+                                 Grid.Column="1"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                 SelectionMode="Extended"
+                                 ItemsSource="{Binding CharacterInventory.Items}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Controls:WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Padding"
+                                            Value="0" />
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Image Width="20"
+                                           Height="20"
+                                           ToolTipService.ToolTip="{Binding Type, Converter={StaticResource EnumToNameConverter}}"
+                                           Source="{Binding Type, Converter={StaticResource EnumToImageConverter}}" />
+                            </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox> 
+                        <Button Width="20"
+                                Height="46"
+                                Grid.Column="2"
+                                Margin="2"
+                                Click="DropItems">
+                            <Image Source="/down_arrow.png" />
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            <Border Grid.Row="1"
+                    Background="Black">
+                <TextBlock Margin="5,2,0,2"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           Text="Actions" />
+            </Border>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Border BorderThickness="2,0,2,2"
+                        BorderBrush="Black"
+                        Grid.RowSpan="2">
+                    <Canvas x:Name="_currentPlotCanvas"
+                            Width="100"
+                            Height="100" />
+                </Border>
+                <Border Background="Brown"
+                        Grid.RowSpan="2"
+                        Visibility="{Binding HasResources, Converter={StaticResource BoolToVisibilityConverter}}"
+                        CornerRadius="10"
+                        Height="20"
+                        MinWidth="20"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,5,10,0">
+                    <TextBlock Foreground="White"
+                               FontWeight="Bold"
+                               Margin="3"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Text="{Binding ResourceAmount}" />
+                </Border>
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="1">
+                    <ListBox x:Name="_plotInventoryListBox"
+                             BorderBrush="LightSlateGray"
+                             BorderThickness="1"
+                             Width="113"
+                             Height="46"
+                             Margin="2,1,1,1"
+                             HorizontalAlignment="Left"
+                             SelectionMode="Extended"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ItemsSource="{Binding PlotInventory.Items}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Controls:WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Padding"
+                                        Value="0" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Image Width="20"
+                                       Height="20"
+                                       ToolTipService.ToolTip="{Binding Type, Converter={StaticResource EnumToNameConverter}}"
+                                       Source="{Binding Type, Converter={StaticResource EnumToImageConverter}}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Width="20"
+                            Height="46"
+                            Margin="2"
+                            Click="PickUpItems">
+                        <Image Source="/up_arrow.png" />
+                    </Button>
+                </StackPanel>
+                <Border Grid.Column="1"
+                        Grid.Row="1"
+                        Height="40"
+                        MinWidth="40"
+                        HorizontalAlignment="Center"
+                        CornerRadius="20"
+                        Background="Blue">
+                    <StackPanel Orientation="Horizontal"
+                                Margin="10,5,10,5"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock Foreground="White"  
+                                   FontWeight="Bold"
+                                   FontSize="32"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding ActionPoints}" />
+                        <TextBlock Foreground="White" 
+                                   VerticalAlignment="Bottom"
+                                   Margin="2,0,0,2"
+                                   Text="AP" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ComboBox x:Name="_startConstructionChooser" 
+                          Width="140"
+                          Height="24"
+                          Margin="0,5,5,5"
+                          SelectedIndex="0">
+                    <ComboBox.Items>
+                        <StackPanel Orientation="Horizontal" Tag="Road">
+                            <Image Source="/dirt_road_icon.png"
+                                   Width="16"
+                                   Height="16"
+                                   VerticalAlignment="Center"
+                                   Margin="2,2,5,2"/>
+                            <TextBlock Text="Road"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </ComboBox.Items>
+                </ComboBox>
+                <Button Grid.Column="1"
+                        Margin="0,5,0,5"
+                        Click="StartConstruction">
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="Build"
+                                   FontSize="14"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="20AP"
+                                   VerticalAlignment="Center"
+                                   Margin="5,0,0,0"
+                                   Foreground="Blue" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+            <Grid Margin="0,5,0,10"
+                  Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Button HorizontalAlignment="Center"
+                        Click="EnableMoveInterface"
+                        Visibility="{Binding MoveInterfaceEnabled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=false}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/move_icon.png"
+                               Width="32"
+                               Height="32" 
+                               Margin="3"/>
+                        <TextBlock FontSize="20"
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center"
+                                   Text="Move"
+                                   Margin="0,3,3,3" />
+                    </StackPanel>
+                </Button>
+                <Button HorizontalAlignment="Center"
+                        Click="DisableMoveInterface"
+                        Visibility="{Binding MoveInterfaceEnabled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=true}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/cancel_move_icon.png" 
+                               Width="32"
+                               Height="32"
+                               Margin="3"/>
+                        <TextBlock FontSize="20"
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center"
+                                   Text="Cancel"
+                                   Margin="0,3,3,3" />
+                    </StackPanel>
+                </Button>
+                <Button HorizontalAlignment="Center"
+                        Click="GatherResources" 
+                        Grid.Column="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/mine_action_icon.png"
+                               Width="32"
+                               Height="32"
+                               Margin="3" />
+                        <TextBlock FontSize="20"
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center"
+                                   Text="Mine"
+                                   Margin="0,3,3,3" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+            <Border Grid.Row="5"
+                    Background="Black">
+                <TextBlock Margin="5,2,0,2"
+                           Visibility="{Binding HasUpgrade, Converter={StaticResource BoolToVisibilityConverter}}"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           Text="Building" />
+            </Border>
+            <Border Grid.Row="6"
+                    BorderBrush="{x:Null}"
+                    BorderThickness="0"
+                    Visibility="{Binding HasUpgrade, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Controls1:ConstructionWorkControl x:Name="_constructionWorkControl"
+                                                   DataContext="{Binding ConstructionWork, Mode=OneTime}" />
+            </Border>
+        </Grid>
+        <StackPanel Visibility="{Binding CharacterInWorld, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=false}">
+            <TextBlock FontWeight="Bold" Text="Welcome!" />
+            <TextBlock Text="How would you like to be known?" />
+            <TextBox Margin="5" Text="{Binding NewCharacterName, Mode=TwoWay}" />
+            <Button Height="50" Width="150" Content="Join World" Click="JoinWorld"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

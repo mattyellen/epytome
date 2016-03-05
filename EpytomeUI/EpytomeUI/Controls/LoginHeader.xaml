@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="EpytomeUI.Controls.LoginHeader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="400">
+
+    <Grid x:Name="LayoutRoot"
+          Background="Black">
+        <Grid.Resources>
+            <Style x:Key="TextStyle"
+                   TargetType="TextBlock">
+                <Setter Property="Foreground"
+                        Value="White" />
+                <Setter Property="FontWeight"
+                        Value="Bold" />
+            </Style>
+        </Grid.Resources>
+        <Border Visibility="{Binding Initialized, Converter={StaticResource BoolToVisibilityConverter}}"
+                Margin="5">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <TextBlock Style="{StaticResource TextStyle}"
+                           Text="{Binding DisplayUser}" />
+                <TextBlock Style="{StaticResource TextStyle}"
+                           Text=" | " />
+                <HyperlinkButton Visibility="{Binding UserInfo.IsUserLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=false}"
+                                 NavigateUri="{Binding UserInfo.LoginUrl}"
+                                 Content="Login" />
+                <HyperlinkButton Visibility="{Binding UserInfo.IsUserLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}"
+                                 NavigateUri="{Binding UserInfo.LogoutUrl}"
+                                 Content="Logout" />
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpytomeUI", "EpytomeUI\EpytomeUI.csproj", "{DFA46AF6-BB0C-48D2-B61F-3C016BA035B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpytomeUI.Web", "EpytomeUI.Web\EpytomeUI.Web.csproj", "{3661E5CA-3DAC-4B20-89A7-B900CD990614}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DFA46AF6-BB0C-48D2-B61F-3C016BA035B1} = {DFA46AF6-BB0C-48D2-B61F-3C016BA035B1}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFA46AF6-BB0C-48D2-B61F-3C016BA035B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFA46AF6-BB0C-48D2-B61F-3C016BA035B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFA46AF6-BB0C-48D2-B61F-3C016BA035B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFA46AF6-BB0C-48D2-B61F-3C016BA035B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3661E5CA-3DAC-4B20-89A7-B900CD990614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3661E5CA-3DAC-4B20-89A7-B900CD990614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3661E5CA-3DAC-4B20-89A7-B900CD990614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3661E5CA-3DAC-4B20-89A7-B900CD990614}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

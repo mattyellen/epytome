@@ -1,0 +1,5 @@
+appengine-generated
+classes
+lib/*.jar
+!lib/json-0.21.jar
+!lib/objectify-4.0b1.jar

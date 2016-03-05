@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="EpytomeUI.MainPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:Controls="clr-namespace:EpytomeUI.Controls" xmlns:Utilities="clr-namespace:EpytomeUI.Utilities" mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="613">
+
+    <Grid x:Name="LayoutRoot"
+          Background="Gray"
+          Loaded="OnLoaded">
+        <Grid.Resources>
+            <Style x:Key="BorderStyle"
+                   TargetType="Border">
+                <Setter Property="BorderBrush"
+                        Value="Black" />
+                <Setter Property="BorderThickness"
+                        Value="2" />
+                <Setter Property="CornerRadius"
+                        Value="10" />
+                <Setter Property="Margin"
+                        Value="2" />
+                <Setter Property="Background"
+                        Value="White" />
+            </Style>
+
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="_leftColumnPadding" Width="0" />
+            <ColumnDefinition x:Name="_characterControlColumn" Width="260" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Controls:LoginHeader Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              DataContext="{Binding UserInfoVM, Mode=OneTime}" />
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="Black"
+                    Background="Black"
+                    Padding="25,0,25,25"
+                    Grid.Row="0">
+                <TextBlock HorizontalAlignment="Center"
+                            Foreground="White"
+                            FontSize="32"
+                            FontWeight="Bold"
+                            Text="Epytome" />
+            </Border>
+            <Border Grid.Row="1" Style="{StaticResource BorderStyle}"
+                    Visibility="{Binding UserInfoVM.UserInfo.IsUserLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Controls:CharacterControl x:Name="CharacterControl"
+                                           Margin="5"
+                                           DataContext="{Binding CharacterControlVM, Mode=OneTime}"/>
+            </Border>
+            <Button Grid.Row="5"
+                    Content="Reset World"
+                    Margin="10"
+                    Height="30"
+                    Visibility="{Binding UserInfoVM.IsMattYellen, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Click="ResetWorld" />
+        </Grid>
+        <Controls:World x:Name="WorldControl"
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        DataContext="{Binding WorldVM, Mode=OneTime}"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,12 @@
+﻿<Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:Utilities="clr-namespace:EpytomeUI.Utilities" 
+             x:Class="EpytomeUI.App">
+    <Application.Resources>
+    	<Utilities:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    	<Utilities:FormatStringConverter x:Key="FormatStringConverter" />
+        <Utilities:GreyedOutConverter x:Key="GreyedOutConverter" />
+        <Utilities:EnumToImageConverter x:Key="EnumToImageConverter" />
+        <Utilities:EnumToNameConverter x:Key="EnumToNameConverter" />
+    </Application.Resources>
+</Application>

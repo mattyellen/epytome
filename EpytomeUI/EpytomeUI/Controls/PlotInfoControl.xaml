@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="EpytomeUI.Controls.PlotInfoControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.Resources>
+            <Style x:Key="LabelText"
+                   TargetType="TextBlock">
+                <Setter Property="FontWeight"
+                        Value="Bold" />
+                <Setter Property="HorizontalAlignment"
+                        Value="Right" />
+            </Style>
+            <Style x:Key="ValueText"
+                   TargetType="TextBlock">
+                <Setter Property="Grid.Column"
+                        Value="1" />
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource LabelText}"
+                   Grid.Row="0"
+                   Text="Coordinates: " />
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0"
+                    Grid.Column="1">
+            <TextBlock Style="{StaticResource ValueText}"
+                       Text="{Binding PlotInfo.LocX}" />
+            <TextBlock Style="{StaticResource ValueText}"
+                       Text="," />
+            <TextBlock Style="{StaticResource ValueText}"
+                       Text="{Binding PlotInfo.LocY}" />
+        </StackPanel>
+        <TextBlock Style="{StaticResource LabelText}"
+                   Grid.Row="1"
+                   Text="Plot Type: " />
+        <TextBlock Style="{StaticResource ValueText}"
+                   Grid.Row="1"
+                   Text="{Binding PlotInfo.Type}" />
+        <TextBlock Style="{StaticResource LabelText}"
+                   Grid.Row="2"
+                   Text="Construction: " />
+        <TextBlock Style="{StaticResource ValueText}"
+                   Grid.Row="2"
+                   Text="{Binding PlotInfo.ConstructionType}" />
+        <TextBlock Style="{StaticResource LabelText}"
+                   Grid.Row="3"
+                   Text="Characters: " 
+                   VerticalAlignment="Top"
+                   Visibility="{Binding HasCharacters, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <StackPanel Grid.Row="3"
+                    Grid.Column="1"
+                    Visibility="{Binding HasCharacters, Converter={StaticResource BoolToVisibilityConverter}}">
+            <ItemsControl ItemsSource="{Binding PlotInfo.Characters}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Style="{StaticResource ValueText}"
+                                   Text="{Binding Name}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Grid>
+</UserControl>

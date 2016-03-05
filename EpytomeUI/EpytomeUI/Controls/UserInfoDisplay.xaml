@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="EpytomeUI.Controls.UserInfoDisplay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.Resources>
+            <Style x:Key="LabelText" TargetType="TextBlock">
+                <Setter Property="FontWeight"
+                        Value="Bold" />
+                <Setter Property="HorizontalAlignment"
+                        Value="Right" />
+            </Style>
+            <Style x:Key="ValueText"
+                   TargetType="TextBlock">
+                <Setter Property="Grid.Column"
+                        Value="1" />
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource LabelText}"
+                   Grid.Row="0"
+                   Text="Nickname: " />
+        <TextBlock Style="{StaticResource ValueText}"
+                   Grid.Row="0"
+                   Text="{Binding UserInfo.UserNickname}" />
+
+        <TextBlock Style="{StaticResource LabelText}"
+                   Grid.Row="1"
+                   Text="Email: " />
+        <TextBlock Style="{StaticResource ValueText}"
+                   Grid.Row="1"
+                   Text="{Binding UserInfo.UserEmail}" />
+
+        <TextBlock Style="{StaticResource LabelText}"
+                   Grid.Row="2"
+                   Text="Auth Domain: " />
+        <TextBlock Style="{StaticResource ValueText}"
+                   Grid.Row="2"
+                   Text="{Binding UserInfo.UserAuthDomain}" />
+
+        <TextBlock Style="{StaticResource LabelText}"
+                   Grid.Row="3"
+                   Text="Federated Identity: " />
+        <TextBlock Style="{StaticResource ValueText}"
+                   Grid.Row="3"
+                   Text="{Binding UserInfo.UserFederatedIdentity}" />
+
+        <TextBlock Style="{StaticResource LabelText}"
+                   Grid.Row="4"
+                   Text="User ID: " />
+        <TextBlock Style="{StaticResource ValueText}"
+                   Grid.Row="4"
+                   Text="{Binding UserInfo.UserId}" />
+    </Grid>
+</UserControl>
