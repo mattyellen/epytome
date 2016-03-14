@@ -59,7 +59,7 @@ public class ResetWorldCommand extends
 
 		//Build a new one
 		WorldModel newWorld = new WorldModel();
-		newWorld.Id = worldId;
+		newWorld.Id = (worldId == null) ? 0 : worldId;
 		newWorld.Name = "Epytome";
 		ofy().save().entity(newWorld).now();
 		

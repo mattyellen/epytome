@@ -1,21 +1,13 @@
 package com.sockfullofpennies.epytome;
 
 import java.io.IOException;
+
 import javax.servlet.http.*;
 
-import java.io.IOException;
-import javax.servlet.http.*;
-
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyService;
 import com.sockfullofpennies.epytome.db.EpytomeDB;
 import com.sockfullofpennies.epytome.webapi.ICommandProcessor;
-import com.sockfullofpennies.epytome.db.EpytomeDB;
-import com.sockfullofpennies.epytome.webapi.*;
 import com.sockfullofpennies.epytome.util.StackTraceUtil;
 import com.twolattes.json.Json;
-
-import static com.googlecode.objectify.ObjectifyService.ofy;
 
 @SuppressWarnings("serial")
 public class EpytomeServerServlet extends HttpServlet {
@@ -32,7 +24,7 @@ public class EpytomeServerServlet extends HttpServlet {
 		String replyStr;
 		try
 		{
-			Class commandClass = Class.forName(commandClassName);
+			Class<?> commandClass = Class.forName(commandClassName);
 			ICommandProcessor command = (ICommandProcessor)commandClass.newInstance();
 			replyStr = command.Process(jsonObj);
 		}

@@ -1,10 +1,6 @@
 package com.sockfullofpennies.epytome.db;
 
 import java.util.ConcurrentModificationException;
-import java.util.HashSet;
-
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.VoidWork;
 import com.googlecode.objectify.Work;
 import com.sockfullofpennies.epytome.util.CommandFailedException;
@@ -17,19 +13,19 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 public class LockManager {
 	private static final int DEFAULT_LOCK_RETRIES = 3;
 
-	private static String MakeObjectLockId(Class clazz, String id) {
+	private static String MakeObjectLockId(Class<?> clazz, String id) {
 		return "c:"+clazz.getName()+"|"+id;
 	}
 	
 	// Object locks
-	public static void GetObjectLock(Class clazz, String id) throws CommandFailedException {
+	public static void GetObjectLock(Class<?> clazz, String id) throws CommandFailedException {
 		GetObjectLock(clazz, id, DEFAULT_LOCK_RETRIES);
 	}
-	public static void GetObjectLock(Class clazz, String id, int retries) throws CommandFailedException {
+	public static void GetObjectLock(Class<?> clazz, String id, int retries) throws CommandFailedException {
 		GetLock(MakeObjectLockId(clazz, id), retries);
 	}
 
-	public static void ReleaseObjectLock(Class clazz, String id) {
+	public static void ReleaseObjectLock(Class<?> clazz, String id) {
 		ReleaseLock(MakeObjectLockId(clazz, id));
 	}
 

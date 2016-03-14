@@ -158,19 +158,21 @@ namespace EpytomeUI.ViewModels
             new GetCharacterInfoCommand 
             {
                 ReplyCallback = OnGetCharacterInfoReply,
-                ErrorCallback = OnGetCharaterInfoError,
+                ErrorCallback = SuppressErrors,
             }.Send(charReq);
 
             var plotReq = new GetCurrentPlotInfoRequest() { WorldId = _worldId };
             new GetCurrentPlotInfoCommand()
             {
                 ReplyCallback = OnGetCurrentPlotInfoReply,
+                ErrorCallback = SuppressErrors
             }.Send(plotReq);
         }
 
-        private void OnGetCharaterInfoError(ReplyBase reply)
+        private void SuppressErrors(ReplyBase reply)
         {
-            if (reply.Status == CommandStatus.UserNotLoggedIn)
+            if (reply.Status == CommandStatus.UserNotLoggedIn ||
+                reply.Status == CommandStatus.CharacterNotFound)
             {
                 //This one is okay.  Suppress the error popup
                 reply.ShowErrorWindow = false;
@@ -186,7 +188,10 @@ namespace EpytomeUI.ViewModels
             MaxActionPoints = reply.MaxActionPoints;
             LocX = reply.LocX;
             LocY = reply.LocY;
-            CharacterInventory.SetItems(reply.Inventory);
+            if (reply.CharacterInWorld)
+            {
+                CharacterInventory.SetItems(reply.Inventory);
+            }
         }
 
         private void OnGetCurrentPlotInfoReply(GetCurrentPlotInfoReply reply)

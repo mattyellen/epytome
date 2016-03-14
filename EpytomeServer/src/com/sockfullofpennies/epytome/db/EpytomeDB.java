@@ -7,7 +7,6 @@ import java.util.Set;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -19,7 +18,7 @@ import com.sockfullofpennies.epytome.world.Character;
 
 public class EpytomeDB {
 	public static void Initialize() {
-		for(Class clazz : EpytomeDB.class.getClasses()) {
+		for(Class<?> clazz : EpytomeDB.class.getClasses()) {
 			System.out.println("Registering: "+clazz);
 			ObjectifyService.register(clazz);
 		}
